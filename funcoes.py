@@ -1,5 +1,4 @@
 lista_de_alunos = []
-notas_dos_alunos = []
 
 
 def menu_inicial():
@@ -9,7 +8,22 @@ def menu_inicial():
 3. Buscar aluno pelo nome
 4. Remover aluno
 5. Mostrar média geral das notas
-6. Sair''')
+6. Editar aluno
+7. Sair''')
+
+
+def validacao_idade(idade):
+    if idade >= 10 and idade <= 100:
+        return True
+    else:
+        return False
+
+
+def validacao_nota(nota):
+    if nota >= 0 and nota <= 10:
+        return True
+    else:
+        return False
 
 
 def validacao_dados(idade, nota):
@@ -69,8 +83,53 @@ def remover_aluno(nome):
 def media_geral():
     total_notas = 0
     for nota in lista_de_alunos:
-        notas_dos_alunos.append(nota['nota_do_aluno'])
         total_notas += nota['nota_do_aluno']
 
-    media = total_notas / len(notas_dos_alunos)
+    media = total_notas / len(lista_de_alunos)
     print(f'\nA média geral das notas é: {media:.2f} ')
+
+
+def editar_aluno(nome):
+    for aluno in lista_de_alunos:
+        if aluno['nome_do_aluno'] == nome:
+            oque_deseja_alterar = input('''
+1 - Nome
+2 - Idade
+3 - Nota
+0 - Voltar ao menu inicial
+
+Oque deseja alterar do aluno: ''')
+
+            match oque_deseja_alterar:
+                case '1':
+                    nome_novo = input('Informe o novo nome: ')
+                    aluno['nome_do_aluno'] = nome_novo
+                case '2':
+                    idade_nova = int(input('Informe a idade nova: '))
+                    if validacao_idade(idade_nova):
+                        aluno['idade_do_aluno'] = idade_nova
+                        print('Alteração feita com sucesso!!')
+                        return
+
+                    print('Idade incorreta!!')
+                case '3':
+                    nota_nova = float(input('Informe a nota nova: '))
+                    if validacao_nota(nota_nova):
+                        aluno['nota_do_aluno'] = nota_nova
+                        print('Alteração feita com sucesso!!')
+
+                        if aluno['nota_do_aluno'] >= 7:
+                            aluno['status_do_aluno'] = 'Aprovado'
+                        else:
+                            aluno['status_do_aluno'] = 'Reprovado'
+
+                        return
+
+                    print('Nota incorreta!!')
+                case '0':
+                    continue
+                case _:
+                    print('Opção invalida!!')
+            continue
+        else:
+            print('Nome inválido!! Tente novamente!')

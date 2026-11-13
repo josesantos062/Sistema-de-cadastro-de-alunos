@@ -7,7 +7,7 @@ while True:
 
     match opcoes:
         case '1':
-            nome = input('Informe o nome do aluno: ').strip
+            nome = input('Informe o nome do aluno: ').strip()
             idade = int(input('Informe a idade do aluno: '))
             nota = float(input('Informe a nota do aluno: '))
             if validacao_dados(idade, nota) == True:
@@ -19,7 +19,6 @@ while True:
             if len(lista_de_alunos) < 1:
                 print('\nAinda não existe alunos cadastrados!!')
                 continue
-
             listar_alunos()
 
         case '3':
@@ -35,10 +34,17 @@ while True:
             if len(lista_de_alunos) < 1:
                 print('Não existe alunos cadastrados!!')
                 continue
-
             media_geral()
 
         case '6':
+            if len(lista_de_alunos) < 1:
+                print('Ainda não há um aluno cadastrado!!')
+                continue
+
+            aluno_para_remover = input('Informe o nome do aluno que deseja remover: ').strip()
+            editar_aluno(aluno_para_remover)
+
+        case '7':
             print('Volte sempre!')
             break
 
